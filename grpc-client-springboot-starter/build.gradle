@@ -1,0 +1,36 @@
+group 'cn.sciento'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+//install {
+//    repositories.mavenInstaller {
+//        pom.version = project.version
+//        pom.artifactId = 'grpc-client-springboot-starter'
+//        pom.groupId = project.group
+//    }
+//}
+
+dependencies {
+    compile project(':grpc-client-autoconfigure')
+}
+
+
+task createPom << {
+    pom {
+        project {
+            groupId  project.group
+            artifactId 'grpc-client-springboot-starter'
+            version project.version
+            inceptionYear '2018'
+        }
+    }.writeTo("$buildDir/pom.xml")
+}

@@ -1,0 +1,90 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+        projectVersion = '2.0.1.RELEASE'
+
+        grpcVersion = '1.14.0'
+        protobufVersion = '3.5.1'
+        protobufGradlePluginVersion = '0.8.4'
+
+        springSleuthVersion = '2.0.1.RELEASE'
+        springCloudVersion = 'Finchley.SR1'
+        springCloudConsulVersion = '2.0.1.RELEASE'
+        springCloudEurekaVersion = '2.0.1.RELEASE'
+        braveInstrumentationGrpc='5.1.2'
+    }
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+//plugins {
+//    id 'java-library'
+//}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            mavenLocal()
+        }
+
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://repo.spring.io/libs-milestone' }
+    }
+    dependencies{
+        compileOnly('org.projectlombok:lombok:1.18.2')
+        annotationProcessor('org.projectlombok:lombok:1.18.2')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+//apply plugin: 'application'
+//apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven' // 引入maven插件
+
+group 'cn.sciento'
+version '1.0'
+sourceCompatibility = 1.8
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            mavenLocal()
+        }
+    }
+}
+
+//install {
+//    repositories.mavenInstaller {
+//        pom.version = project.version
+//        pom.artifactId = 'grpc-client-springboot-starter'
+//    }
+//}
+
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+//    compile project(':grpc-client-autoconfigure')
+}
