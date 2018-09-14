@@ -14,6 +14,8 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ReflectionUtils;
 
+import javax.net.ssl.SSLException;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,14 @@ public class GrpcClientBeanPostProcessor implements org.springframework.beans.fa
                             list.add(clientInterceptor);
                         }
 
-                        Channel channel = channelFactory.createChannel(annotation.value(), list);
+                        Channel channel = null;
+                        try {
+                            channel = channelFactory.createChannel(annotation.value(), list);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (SSLException e) {
+                            e.printStackTrace();
+                        }
                         ReflectionUtils.makeAccessible(field);
                         ReflectionUtils.setField(field, target, channel);
                     }

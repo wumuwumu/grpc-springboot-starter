@@ -40,7 +40,7 @@ public class AddressChannelFactory implements GrpcChannelFactory {
     @Override
     public Channel createChannel(String name, List<ClientInterceptor> interceptors) throws FileNotFoundException, SSLException {
         GrpcChannelProperties channelProperties = properties.getChannel(name);
-        NettyChannelBuilder builder = NettyChannelBuilder.forTarget(name)
+        NettyChannelBuilder builder = NettyChannelBuilder.forTarget(channelProperties.getScheme())
                 .loadBalancerFactory(loadBalancerFactory)
                 .nameResolverFactory(nameResolverFactory);
         if (properties.getChannel(name).isPlaintext()) {
@@ -54,7 +54,7 @@ public class AddressChannelFactory implements GrpcChannelFactory {
         if(channelProperties.getMaxInboundMessageSize() > 0) {
         	builder.maxInboundMessageSize(channelProperties.getMaxInboundMessageSize());
         }
-        if(channelProperties.getTrustCertCollectionPath() != null || channelProperties.getTrustCertCollectionPath().length() >0){
+        if(channelProperties.getTrustCertCollectionPath() != null && channelProperties.getTrustCertCollectionPath().length() >0){
             File file= ResourceUtils.getFile(channelProperties.getTrustCertCollectionPath());
             builder.sslContext(GrpcSslContexts.forClient().trustManager(file).build());
         }

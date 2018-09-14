@@ -66,4 +66,6 @@ public class GrpcChannelProperties {
 
 
     private String trustCertCollectionPath;
+
+    private String scheme = "";
 }

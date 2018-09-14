@@ -26,4 +26,13 @@ public class GrpcChannelsProperties {
         }
         return grpcChannelProperties;
     }
+
+    public GrpcChannelProperties getChannelScheme(String scheme) {
+        for(GrpcChannelProperties channelProperties : client.values()){
+            if(channelProperties.getScheme().equals(scheme)){
+                return channelProperties;
+            }
+        }
+        return null;
+    }
 }

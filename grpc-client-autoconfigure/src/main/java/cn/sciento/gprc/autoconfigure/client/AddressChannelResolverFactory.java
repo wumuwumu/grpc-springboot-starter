@@ -24,7 +24,7 @@ public class AddressChannelResolverFactory extends NameResolverProvider {
     @Nullable
     @Override
     public NameResolver newNameResolver(URI targetUri, Attributes params) {
-        return new AddressChannelNameResolver(targetUri.toString(), properties.getChannel(targetUri.toString()), params, GrpcUtil.SHARED_CHANNEL_EXECUTOR);
+        return new AddressChannelNameResolver(targetUri.toString(), properties.getChannelScheme(targetUri.toString()), params, GrpcUtil.SHARED_CHANNEL_EXECUTOR);
     }
 
     @Override
